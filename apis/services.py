@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from functools import partial
 
 import jwt
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import verify_password as _verify_password
 
 from apis.models import User, RefreshToken
 
@@ -16,7 +16,7 @@ def decode_access_token(token: str):
 
 
 def verify_password(password, hashed_password):
-    return hashed_password == make_password(password)
+    return _verify_password(password, hashed_password)[0]
 
 
 def get_new_refresh_token(user: User) -> RefreshToken:

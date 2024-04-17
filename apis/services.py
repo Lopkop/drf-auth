@@ -5,14 +5,15 @@ import jwt
 from django.contrib.auth.hashers import verify_password as _verify_password
 
 from apis.models import User, RefreshToken
+from config.settings import env_vars
 
 
 def generate_access_token(data: dict):
-    return jwt.encode(data, "env_vars['JWT_SECRET']", algorithm="HS256")
+    return jwt.encode(data, env_vars['JWT_SECRET'], algorithm="HS256")
 
 
 def decode_access_token(token: str):
-    return jwt.decode(token, "env_vars['JWT_SECRET']", algorithms=['HS256'])
+    return jwt.decode(token, env_vars['JWT_SECRET'], algorithms=['HS256'])
 
 
 def verify_password(password, hashed_password):
